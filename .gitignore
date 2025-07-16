@@ -9,6 +9,7 @@
 
 # production
 /build
+.buildhash
 
 # debug
 npm-debug.log*
@@ -34,3 +35,4 @@ next-env.d.ts
 
 # logs
 /trigger-logs/
+/logs-builder/

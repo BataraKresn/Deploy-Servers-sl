@@ -16,12 +16,12 @@ app = FastAPI(
 )
 
 
-# Init Rate Limiter
+# ✅ Init Rate Limiter
 limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
 app.add_middleware(SlowAPIMiddleware)
 
-# CORS settings (kalau frontend dan backend beda origin)
+# ✅ CORS settings (kalau frontend dan backend beda origin)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -30,7 +30,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Register all routers
+# ✅ Register all routers
 app.include_router(deploy.router, prefix="/api")
 app.include_router(servers.router, prefix="/api")
 app.include_router(logs.router, prefix="/api")

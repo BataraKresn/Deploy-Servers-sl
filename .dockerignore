@@ -3,3 +3,4 @@ node_modules
 .next
 .git
 **/__pycache__
+/logs-builder/
