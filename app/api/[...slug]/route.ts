@@ -1,9 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server"
 
-// URL backend diambil dari .env (NEXT_PUBLIC_BACKEND_API_URL)
-// Use process.env only if using Node.js runtime, otherwise use globalThis for edge runtime
+// Determine backend URL from environment variables
+// Works in both Node.js and edge runtimes
 const BACKEND_API_URL =
-  process.env?.NEXT_PUBLIC_BACKEND_API_URL ??
+  process.env.BACKEND_API_URL ??
+  process.env.NEXT_PUBLIC_BACKEND_API_URL ??
+  (globalThis as any).BACKEND_API_URL ??
   (globalThis as any).NEXT_PUBLIC_BACKEND_API_URL ??
   "";
 
