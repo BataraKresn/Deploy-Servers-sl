@@ -54,7 +54,7 @@ export default function DeployPage() {
         if (!res.ok) {
           throw new Error(parsed.detail || "Failed to fetch servers")
         }
-      setServers(parsed)
+        setServers(parsed)
       } catch (err: any) {
         setError(err.message)
       } finally {
