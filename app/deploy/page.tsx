@@ -44,12 +44,19 @@ export default function DeployPage() {
     const fetchServers = async () => {
       try {
         const res = await fetch("/api/servers")
-        if (!res.ok) {
-          const errorData = await res.json()
-          throw new Error(errorData.detail || "Failed to fetch servers")
+        const text = await res.text()
+        let parsed: any
+        try {
+          parsed = JSON.parse(text)
+        } catch {
+          throw new Error(text || "Invalid response from server")
         }
-        const data = await res.json()
-        setServers(data)
+
+        if (!res.ok) {
+          throw new Error(parsed.detail || "Failed to fetch servers")
+        }
+
+        setServers(parsed)
       } catch (err: any) {
         setError(err.message)
       } finally {

@@ -42,11 +42,11 @@ async function handler(req: NextRequest) {
       }
 
       const contentType = apiRes.headers.get("content-type") || ""
-      if (contentType.includes("text/plain")) {
+      if (contentType.startsWith("text/")) {
         const text = await apiRes.text()
         return new Response(text, {
           status: apiRes.status,
-          headers: { "Content-Type": "text/plain" },
+          headers: { "Content-Type": contentType },
         })
       }
 
