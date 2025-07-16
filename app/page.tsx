@@ -202,9 +202,11 @@ export default function HomePage() {
                     </Button>
                   </div>
                   {healthResult && (
-                    <pre className="overflow-x-auto whitespace-pre-wrap break-words bg-muted p-4 rounded text-sm max-h-[50vh]">
-                      {JSON.stringify(healthResult, null, 2)}
-                    </pre>
+                    <div className="overflow-x-auto max-w-full">
+                      <pre className="whitespace-pre-wrap break-words bg-muted p-4 rounded text-sm max-h-[50vh] w-full">
+                        {JSON.stringify(healthResult, null, 2)}
+                      </pre>
+                    </div>
                   )}
                 </div>
               </DialogContent>

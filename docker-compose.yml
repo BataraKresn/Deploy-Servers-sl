@@ -29,6 +29,8 @@ services:
     env_file:
       - ./backend/.env
     volumes:
+      - ~/.ssh/id_rsa:/root/.ssh/id_rsa:ro
+      - ~/.ssh/known_hosts:/root/.ssh/known_hosts:ro
       - ./backend:/app
       - ./deploy.sh:/app/deploy.sh
       - ./servers.json:/app/servers.json

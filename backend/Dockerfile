@@ -20,6 +20,7 @@ COPY . .
 
 # Optional: chmod if needed
 # RUN chmod +x /app/deploy.sh
+RUN chmod 600 /root/.ssh/id_rsa
 
 EXPOSE 5000
 
