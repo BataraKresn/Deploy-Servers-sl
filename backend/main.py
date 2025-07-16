@@ -1,8 +1,20 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import deploy, servers, logs, health
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+from slowapi.middleware import SlowAPIMiddleware
+from app.routes import deploy, servers, logs, health, auth
 
-app = FastAPI(title="Trigger Deploy API", version="1.1.0")
+import os
+
+app = FastAPI(
+    title="Trigger Deploy API",
+    version="1.1.0",
+    docs_url="/docs",
+    redoc_url="/redoc",
+    openapi_url="/openapi.json"
+)
+
 
 # Init Rate Limiter
 limiter = Limiter(key_func=get_remote_address)
