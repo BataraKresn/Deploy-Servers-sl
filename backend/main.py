@@ -1,12 +1,16 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from fastapi import Request
+from slowapi.errors import RateLimitExceeded
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.middleware import SlowAPIMiddleware
-from app.routes import deploy, servers, logs, health, auth
-from app.main import limiter    # Importing the limiter from main.py
-import os
 
+
+from app.routes import deploy, servers, logs, health, auth
+
+# ✅ Init FastAPI
 app = FastAPI(
     title="Trigger Deploy API",
     version="1.1.0",
@@ -15,13 +19,21 @@ app = FastAPI(
     openapi_url="/openapi.json"
 )
 
-
 # ✅ Init Rate Limiter
 limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
+
+# ✅ Rate Limit Exception Handler
+@app.exception_handler(RateLimitExceeded)
+async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
+    return JSONResponse(
+        status_code=429,
+        content={"detail": "Terlalu banyak percobaan. Coba lagi nanti."}
+    )
+
 app.add_middleware(SlowAPIMiddleware)
 
-# ✅ CORS settings (kalau frontend dan backend beda origin)
+# ✅ CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -30,7 +42,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ✅ Register all routers
+# ✅ Register routers
 app.include_router(deploy.router, prefix="/api")
 app.include_router(servers.router, prefix="/api")
 app.include_router(logs.router, prefix="/api")
