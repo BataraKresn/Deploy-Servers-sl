@@ -8,8 +8,11 @@ mkdir -p trigger-logs
 chmod +x deploy.sh
 
 # Build and start the containers using Docker Compose
-if command -v docker-compose >/dev/null 2>&1; then
+if docker compose version >/dev/null 2>&1; then
+  docker compose up --build -d
+elif command -v docker-compose >/dev/null 2>&1; then
   docker-compose up --build -d
 else
-  docker compose up --build -d
+  echo "Docker Compose is not installed. Please install Docker Compose." >&2
+  exit 1
 fi
