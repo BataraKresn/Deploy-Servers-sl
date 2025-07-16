@@ -16,15 +16,13 @@ services:
       - /app/node_modules
       - /app/.next
     environment:
-      - BACKEND_API_URL=http://backend:5000
+      - BACKEND_API_URL=http://30.30.30.11:5002
 
   backend:
     image: backend-trigger
     container_name: backend-trigger
     build:
       context: ./backend
-    # Use Gunicorn to run the Flask app
-    command: gunicorn --bind 0.0.0.0:5000 --workers 4 wsgi:app
     ports:
       - "5002:5000"
     restart: always
