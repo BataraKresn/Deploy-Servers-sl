@@ -6,7 +6,7 @@ from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
-from slowapi.decorator import limiter
+from slowapi.decorator import limit
 from slowapi.extension import Limiter as LimiterDecorator
 
 from app.main import limiter

@@ -4,7 +4,7 @@ from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.middleware import SlowAPIMiddleware
 from app.routes import deploy, servers, logs, health, auth
-
+from app.main import limiter    # Importing the limiter from main.py
 import os
 
 app = FastAPI(
