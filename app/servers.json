@@ -1,12 +1,12 @@
 {
     "servers": [
         {
-            "id": "prod-web-1",
-            "name": "Production Web Server 1",
-            "alias": "sat-prod-web-01",
-            "user": "deploy-user",
-            "ip": "192.168.1.10",
-            "path": "/var/www/production-app"
+            "id": "test-deploy-1",
+            "name": "Test Deploy Server 1",
+            "alias": "sat-dev-deploy-01",
+            "user": "satrd",
+            "ip": "30.30.30.169",
+            "path": "/home/satrd/test-deploy"
         },
         {
             "id": "prod-web-2",

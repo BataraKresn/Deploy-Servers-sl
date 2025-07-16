@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -9,6 +9,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Rocket, Server, FileText, HeartPulse, Loader2 } from "lucide-react"
 
 export default function HomePage() {
+  const router = useRouter()
+
+  const [showPasswordDialog, setShowPasswordDialog] = useState(false)
+  const [password, setPassword] = useState("")
+  const [passwordError, setPasswordError] = useState("")
+
   const [healthTarget, setHealthTarget] = useState("")
   const [healthResult, setHealthResult] = useState<any>(null)
   const [isHealthLoading, setIsHealthLoading] = useState(false)
@@ -17,6 +23,27 @@ export default function HomePage() {
   const [logContent, setLogContent] = useState("")
   const [isLogsLoading, setIsLogsLoading] = useState(false)
   const [isLogContentLoading, setIsLogContentLoading] = useState(false)
+
+  const handlePasswordSubmit = async () => {
+    try {
+      const res = await fetch("/api/validate-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ password }),
+      })
+
+      if (res.ok) {
+          router.push("/deploy")
+        } else { 
+          const data = await res.json()
+          setPasswordError(data?.detail || "Password salah!")
+        }
+    } catch (err) {
+        setPasswordError("Terjadi kesalahan jaringan.")
+      }
+  }
 
   const handleCheckHealth = async () => {
     setIsHealthLoading(true)
@@ -73,11 +100,31 @@ export default function HomePage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="p-4 sm:p-6 grid gap-4">
-          <Link href="/deploy" passHref>
-            <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white text-lg h-16">
-              <Server className="mr-2 h-6 w-6" /> Go to Deployments
-            </Button>
-          </Link>
+          <Button
+            className="w-full bg-purple-600 hover:bg-purple-700 text-white text-lg h-16"
+            onClick={() => setShowPasswordDialog(true)}
+          >
+            <Server className="mr-2 h-6 w-6" /> Go to Deployments
+          </Button>
+
+          <Dialog open={showPasswordDialog} onOpenChange={setShowPasswordDialog}>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle>Enter Password</DialogTitle>
+              </DialogHeader>
+              <div className="flex flex-col gap-4">
+                <Input
+                  type="password"
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
+                <Button onClick={handlePasswordSubmit}>Submit</Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+
           <div className="grid grid-cols-2 gap-4">
             <Dialog>
               <DialogTrigger asChild>
@@ -155,7 +202,7 @@ export default function HomePage() {
                     </Button>
                   </div>
                   {healthResult && (
-                    <pre className="bg-gray-100 dark:bg-gray-900 p-4 rounded-md max-h-60 overflow-y-auto text-xs">
+                    <pre className="overflow-x-auto whitespace-pre-wrap break-words bg-muted p-4 rounded text-sm max-h-[50vh]">
                       {JSON.stringify(healthResult, null, 2)}
                     </pre>
                   )}
@@ -168,3 +215,4 @@ export default function HomePage() {
     </div>
   )
 }
+  

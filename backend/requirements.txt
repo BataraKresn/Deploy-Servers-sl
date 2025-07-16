@@ -10,3 +10,4 @@ gevent
 psutil==5.9.4
 simplejson
 werkzeug==2.2.2
+slowapi
