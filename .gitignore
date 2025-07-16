@@ -38,3 +38,4 @@ next-env.d.ts
 /trigger-logs/
 /logs-builder/
 .hash-frontend
+.hash-backend
