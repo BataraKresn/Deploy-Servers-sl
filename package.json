@@ -6,8 +6,7 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start -H 0.0.0.0 -p 3000",
-    "postinstall": "npx tailwindcss -i ./styles/globals.css -o ./public/styles.css --minify && npx tailwind-merge ./public/styles.css -o ./public/styles-merged.css && npx tailwindcss-animate -i ./public/styles-merged.css -o ./public/styles-merged-animated.css --minify && npx vaul generate && npx lucide-react generate --out ./public/lucide-icons.js && npx lucide-react generate --out ./public/lucide-icons.min.js --minify"
+    "start": "next start -H 0.0.0.0 -p 3000"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
