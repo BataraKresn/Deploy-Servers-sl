@@ -77,6 +77,10 @@ export default function DeployPage() {
     setIsDeploying(true)
     setDeployError(null)
     try {
+      if (privateKey && privateKey.length < 30) {
+        setDeployError("SSH key terlalu pendek atau tidak valid")
+        return
+      }
       const payload: { token: string; serverId: string; privateKey?: string } = {
         token,
         serverId: selectedServer.id,
@@ -90,8 +94,14 @@ export default function DeployPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.detail || "Deployment failed")
+      let data
+      try {
+        data = await res.json()
+      } catch {
+        throw new Error("Invalid response from server")
+      }
+      if (!res.ok) throw new Error(data?.detail || "Deployment failed")
+      setIsModalOpen(false)
       router.push(`/result/${data.log_file}`)
     } catch (err: any) {
       setDeployError(err.message)
@@ -151,12 +161,15 @@ export default function DeployPage() {
                   </CardFooter>
                 </Card>
               ))}
+              {servers.length === 0 && (
+                <p className="text-muted-foreground text-center col-span-full">
+                  No servers available to deploy.
+                </p>
+              )}
             </div>
           )}
         </CardContent>
-      </Card>
-
-      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+      </Card><Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="sm:max-w-[480px]">
           <DialogHeader>
             <DialogTitle>Deploy to {selectedServer?.name}</DialogTitle>
@@ -186,6 +199,9 @@ export default function DeployPage() {
                 className="font-mono text-xs h-32"
                 value={privateKey}
                 onChange={(e) => setPrivateKey(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && e.ctrlKey) handleDeploySubmit()
+                }}
               />
               <p className="text-xs text-muted-foreground">
                 The key will only be used for this session and not stored.
