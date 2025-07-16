@@ -51,18 +51,10 @@ export default function DeployPage() {
         } catch {
           throw new Error(text || "Invalid response from server")
         }
-<<<<<<< HEAD
         if (!res.ok) {
           throw new Error(parsed.detail || "Failed to fetch servers")
         }
-=======
-
-        if (!res.ok) {
-          throw new Error(parsed.detail || "Failed to fetch servers")
-        }
-
->>>>>>> af5fe87bd40b7c2d53e8af559dd26a6bf6ff740f
-        setServers(parsed)
+      setServers(parsed)
       } catch (err: any) {
         setError(err.message)
       } finally {
