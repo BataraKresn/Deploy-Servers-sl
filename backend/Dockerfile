@@ -8,7 +8,7 @@ WORKDIR /app
 
 # Install SSH client, jq, ping, net-tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    openssh-client jq bash iputils-ping net-tools \
+    openssh-client jq bash iputils-ping net-tools curl dnsutils \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy the dependencies file to the working directory

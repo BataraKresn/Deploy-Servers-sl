@@ -1,5 +1,7 @@
 services:
   frontend:
+    image: frontend-trigger
+    container_name: frontend-trigger
     build:
       context: .
     ports:
@@ -14,16 +16,17 @@ services:
       - /app/node_modules
       - /app/.next
     environment:
-      # This variable is used by the API proxy inside Next.js
       - BACKEND_API_URL=http://backend:5000
 
   backend:
+    image: backend-trigger
+    container_name: backend-trigger
     build:
       context: ./backend
     # Use Gunicorn to run the Flask app
     command: gunicorn --bind 0.0.0.0:5000 --workers 4 wsgi:app
     ports:
-      - "5002:5000" # Expose backend on 5001 for direct access if needed
+      - "5002:5000"
     restart: always
     env_file:
       - ./backend/.env
