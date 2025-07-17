@@ -108,7 +108,7 @@ export default function HomePage() {
           </Button>
 
           <Dialog open={showPasswordDialog} onOpenChange={setShowPasswordDialog}>
-            <DialogContent className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 sm:max-w-md m-0 p-0">
+            <DialogContent className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[90vw] sm:max-w-[480px] m-0 p-0">
               <DialogHeader>
                 <DialogTitle>Enter Password</DialogTitle>
                 <DialogDescription id="password-desc">Masukkan password untuk melanjutkan proses deploy.</DialogDescription>
@@ -133,7 +133,7 @@ export default function HomePage() {
                   <FileText className="mr-2 h-5 w-5" /> Logs
                 </Button>
               </DialogTrigger>
-              <DialogContent className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 max-w-4xl h-[80vh] m-0 p-0">
+              <DialogContent className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[90vw] sm:max-w-[480px] m-0 p-0">
                 <DialogHeader>
                   <DialogTitle>Deployment Logs</DialogTitle>
                   <DialogDescription id="logs-desc">Daftar log hasil proses deploy server.</DialogDescription>
