@@ -39,4 +39,5 @@ next-env.d.ts
 /logs-builder/
 .hash-frontend
 .hash-backend
+backend/servers.json
 servers.json
