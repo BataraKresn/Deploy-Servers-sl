@@ -6,7 +6,7 @@ A full-stack application to trigger and monitor deployments.
 ## Struktur
 
 - **`app/`**: Next.js frontend (Pages Router) untuk antarmuka pengguna.
-- **`backend/`**: Aplikasi Flask (Python) sebagai API backend.
+- **`backend/`**: Aplikasi FastAPI (Python) sebagai API backend.
 - **`docker-compose.yml`**: Orkestrasi frontend dan backend.
 - **`deploy.sh`**: Skrip deployment yang dijalankan backend.
 - **`servers.json`**: Daftar server tujuan deploy.
