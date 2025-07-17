@@ -204,7 +204,9 @@ export default function HomePage() {
                   {healthResult && (
                     <div className="overflow-x-auto max-w-full">
                       <pre className="whitespace-pre-wrap break-words bg-muted p-4 rounded text-sm max-h-[50vh] w-full">
-                        {JSON.stringify(healthResult, null, 2)}
+                        {healthResult?.ping_output ?? ""}
+                        {"\n\n"}
+                        {healthResult?.dns_output ?? ""}
                       </pre>
                     </div>
                   )}
