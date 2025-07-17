@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -108,7 +109,7 @@ export default function HomePage() {
           </Button>
 
           <Dialog open={showPasswordDialog} onOpenChange={setShowPasswordDialog}>
-            <DialogContent className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[90vw] sm:max-w-[480px] m-0 p-0">
+            <DialogContent className="sm:max-w-[480px]">
               <DialogHeader>
                 <DialogTitle>Enter Password</DialogTitle>
                 <DialogDescription id="password-desc">Masukkan password untuk melanjutkan proses deploy.</DialogDescription>
@@ -133,7 +134,7 @@ export default function HomePage() {
                   <FileText className="mr-2 h-5 w-5" /> Logs
                 </Button>
               </DialogTrigger>
-              <DialogContent className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[90vw] sm:max-w-[480px] m-0 p-0">
+              <DialogContent className="sm:max-w-[480px]">
                 <DialogHeader>
                   <DialogTitle>Deployment Logs</DialogTitle>
                   <DialogDescription id="logs-desc">Daftar log hasil proses deploy server.</DialogDescription>
@@ -188,7 +189,7 @@ export default function HomePage() {
                   <HeartPulse className="mr-2 h-5 w-5" /> Health
                 </Button>
               </DialogTrigger>
-              <DialogContent className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 m-0 p-0">
+              <DialogContent className="sm:max-w-[480px]">
                 <DialogHeader>
                   <DialogTitle>System Health Check</DialogTitle>
                   <DialogDescription id="health-desc">Cek status domain/server dengan ping.</DialogDescription>
