@@ -170,7 +170,7 @@ export default function DeployPage() {
           )}
         </CardContent>
       </Card><Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="sm:max-w-[480px]">
+        <DialogContent className="sm:max-w-[480px] -translate-x-1/2 -translate-y-1/2">
           <DialogHeader>
             <DialogTitle>Deploy to {selectedServer?.name}</DialogTitle>
             <DialogDescription>Enter your credentials to authorize this deployment.</DialogDescription>
