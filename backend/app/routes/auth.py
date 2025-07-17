@@ -1,9 +1,6 @@
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
-from slowapi.errors import RateLimitExceeded
-from slowapi.extension import Limiter
-from slowapi.util import get_remote_address
-from app.main import limiter  # Import limiter dari main.py
+from app.core.extensions import limiter
 import os
 
 router = APIRouter()

@@ -3,11 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi import Request
 from slowapi.errors import RateLimitExceeded
-from slowapi import Limiter
-from slowapi.util import get_remote_address
 from slowapi.middleware import SlowAPIMiddleware
 
-
+from app.core.extensions import limiter
 from app.routes import deploy, servers, logs, health, auth
 
 # ✅ Init FastAPI
@@ -20,7 +18,6 @@ app = FastAPI(
 )
 
 # ✅ Init Rate Limiter
-limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
 
 # ✅ Rate Limit Exception Handler
