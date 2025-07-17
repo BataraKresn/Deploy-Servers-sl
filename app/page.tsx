@@ -108,7 +108,7 @@ export default function HomePage() {
           </Button>
 
           <Dialog open={showPasswordDialog} onOpenChange={setShowPasswordDialog}>
-            <DialogContent className="sm:max-w-md -translate-x-1/2 -translate-y-1/2">
+            <DialogContent className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 sm:max-w-md m-0 p-0">
               <DialogHeader>
                 <DialogTitle>Enter Password</DialogTitle>
                 <DialogDescription id="password-desc">Masukkan password untuk melanjutkan proses deploy.</DialogDescription>
@@ -133,9 +133,10 @@ export default function HomePage() {
                   <FileText className="mr-2 h-5 w-5" /> Logs
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-4xl h-[80vh] -translate-x-1/2 -translate-y-1/2">
+              <DialogContent className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 max-w-4xl h-[80vh] m-0 p-0">
                 <DialogHeader>
                   <DialogTitle>Deployment Logs</DialogTitle>
+                  <DialogDescription id="logs-desc">Daftar log hasil proses deploy server.</DialogDescription>
                 </DialogHeader>
                 {isLogsLoading ? (
                   <div className="flex items-center justify-center h-full">
@@ -187,9 +188,10 @@ export default function HomePage() {
                   <HeartPulse className="mr-2 h-5 w-5" /> Health
                 </Button>
               </DialogTrigger>
-              <DialogContent className="-translate-x-1/2 -translate-y-1/2">
+              <DialogContent className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 m-0 p-0">
                 <DialogHeader>
                   <DialogTitle>System Health Check</DialogTitle>
+                  <DialogDescription id="health-desc">Cek status domain/server dengan ping.</DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4">
                   <div className="flex gap-2">
