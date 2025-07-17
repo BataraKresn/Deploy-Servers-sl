@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Rocket, Server, FileText, HeartPulse, Loader2 } from "lucide-react"
+import { Globe, Rocket, Server, FileText, HeartPulse, Loader2 } from "lucide-react"
 
 export default function HomePage() {
   const [healthTarget, setHealthTarget] = useState("")
@@ -132,16 +132,18 @@ export default function HomePage() {
                 )}
               </DialogContent>
             </Dialog>
-
             <Dialog>
               <DialogTrigger asChild>
                 <Button variant="outline" className="w-full h-20 bg-transparent">
                   <HeartPulse className="mr-2 h-5 w-5" /> Health
                 </Button>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent className="w-full max-w-[95vw] sm:max-w-lg">
                 <DialogHeader>
                   <DialogTitle>System Health Check</DialogTitle>
+                  <DialogDescription>
+                    Check server health by domain. Example: <span className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">google.co.id</span>
+                  </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4">
                   <div className="flex gap-2">
@@ -155,9 +157,30 @@ export default function HomePage() {
                     </Button>
                   </div>
                   {healthResult && (
-                    <pre className="bg-gray-100 dark:bg-gray-900 p-4 rounded-md max-h-60 overflow-y-auto text-xs">
-                      {JSON.stringify(healthResult, null, 2)}
-                    </pre>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold">Target:</span>
+                        <span className="font-mono">{healthResult.target || healthTarget || "—"}</span>
+                      </div>
+                      {healthResult.ip && (
+                        <div className="flex items-center gap-2">
+                          <Globe className="h-4 w-4 text-blue-500" />
+                          <span className="font-semibold">Resolved IP:</span>
+                          <span className="font-mono">{healthResult.ip}</span>
+                        </div>
+                      )}
+                      {healthResult.ping && (
+                        <div>
+                          <span className="font-semibold">Ping Result:</span>
+                          <pre className="bg-gray-100 dark:bg-gray-900 p-3 rounded-md text-xs mt-1 whitespace-pre-wrap border">
+                            {healthResult.ping}
+                          </pre>
+                        </div>
+                      )}
+                      {healthResult.error && (
+                        <div className="text-red-500 font-semibold">{healthResult.error}</div>
+                      )}
+                    </div>
                   )}
                 </div>
               </DialogContent>
