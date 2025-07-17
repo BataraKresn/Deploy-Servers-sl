@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog"
 import { Rocket, Server, FileText, HeartPulse, Loader2 } from "lucide-react"
 
@@ -115,12 +116,15 @@ export default function HomePage() {
                 <DialogDescription id="password-desc">Masukkan password untuk melanjutkan proses deploy.</DialogDescription>
               </DialogHeader>
               <form className="flex flex-col gap-4" aria-describedby="password-desc" onSubmit={e => {e.preventDefault(); handlePasswordSubmit();}}>
-                <Input
-                  type="password"
-                  placeholder="Enter password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                <Label htmlFor="password">
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="Enter password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Label>
                 {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
                 <Button type="submit">Submit</Button>
               </form>
