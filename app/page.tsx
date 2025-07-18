@@ -142,10 +142,10 @@ export default function HomePage() {
                   <HeartPulse className="mr-2 h-5 w-5" /> Health
                 </Button>
               </DialogTrigger>
-              <DialogContent className="w-full max-w-[95vw] sm:max-w-lg overflow-x-auto">
+              <DialogContent className="w-full max-w-[95vw] sm:max-w-lg overflow-x-auto" aria-describedby="health-dialog-desc">
                 <DialogHeader>
                   <DialogTitle>System Health Check</DialogTitle>
-                  <DialogDescription>
+                  <DialogDescription id="health-dialog-desc">
                     Check server health by domain. Example: <span className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">google.co.id</span>
                   </DialogDescription>
                 </DialogHeader>
@@ -164,13 +164,13 @@ export default function HomePage() {
                   {healthResult?.ping_output || healthResult?.dns_output ? (
                     <div className="space-y-3">
                       {healthResult?.ping_output && (
-                        <div>
-                          <span className="font-semibold">Ping Output:</span>
-                          <pre className="bg-gray-100 dark:bg-gray-900 p-3 rounded-md text-xs mt-1 border max-w-full overflow-x-auto max-h-60 overflow-y-auto whitespace-pre-wrap">
+                        <div className="mb-2">
+                          <span className="font-semibold block mb-1">Ping Output:</span>
+                          <div className="bg-gray-100 dark:bg-gray-900 p-3 rounded-md text-xs border max-w-full overflow-x-auto max-h-60 overflow-y-auto whitespace-pre-wrap">
                             {showFull
                               ? healthResult.ping_output
                               : healthResult.ping_output.slice(0, 500) + (healthResult.ping_output.length > 500 ? "..." : "")}
-                          </pre>
+                          </div>
                           {healthResult.ping_output.length > 500 && (
                             <button
                               onClick={() => setShowFull(!showFull)}
@@ -182,11 +182,11 @@ export default function HomePage() {
                         </div>
                       )}
                       {healthResult?.dns_output && (
-                        <div>
-                          <span className="font-semibold">DNS Output:</span>
-                          <pre className="bg-gray-100 dark:bg-gray-900 p-3 rounded-md text-xs mt-1 whitespace-pre-wrap border max-w-full overflow-x-auto max-h-60 overflow-y-auto">
+                        <div className="mb-2">
+                          <span className="font-semibold block mb-1">DNS Output:</span>
+                          <div className="bg-gray-100 dark:bg-gray-900 p-3 rounded-md text-xs border max-w-full overflow-x-auto max-h-60 overflow-y-auto whitespace-pre-wrap">
                             {healthResult.dns_output}
-                          </pre>
+                          </div>
                         </div>
                       )}
                     </div>
