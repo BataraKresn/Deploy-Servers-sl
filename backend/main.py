@@ -6,7 +6,7 @@ from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 
 from app.core.extensions import limiter
-from app.routes import deploy, servers, logs, health, auth
+from app.routes import deploy, servers, logs, health, auth, stream
 
 # ✅ Init FastAPI
 app = FastAPI(
@@ -45,3 +45,4 @@ app.include_router(servers.router, prefix="/api")
 app.include_router(logs.router, prefix="/api")
 app.include_router(health.router, prefix="/api")
 app.include_router(auth.router, prefix="/api")
+app.include_router(stream.router, prefix="/api")

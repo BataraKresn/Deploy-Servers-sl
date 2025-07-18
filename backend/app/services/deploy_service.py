@@ -34,16 +34,8 @@ async def trigger_deploy(payload: DeployRequest):
     log_file = f"deploy-{payload.serverId}-{datetime.now().strftime('%Y%m%d-%H%M%S')}.log"
     log_path = os.path.join(LOG_DIR, log_file)
 
-    # Hybrid logic: use payload key if provided, else fallback to default
+    # Gunakan key dari volume mount
     key_file = "/root/.ssh/id_rsa"
-    temp_key_created = False
-
-    if payload.privateKey:
-        key_file = os.path.join(TMP_DIR, f"ssh_key_{uuid.uuid4()}")
-        with open(key_file, "w") as f:
-            f.write(payload.privateKey)
-        os.chmod(key_file, stat.S_IRUSR | stat.S_IWUSR)
-        temp_key_created = True
 
     try:
         subprocess.Popen([
@@ -53,6 +45,3 @@ async def trigger_deploy(payload: DeployRequest):
         return {"message": "Deployment triggered", "log_file": log_file}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Deploy failed: {e}")
-    finally:
-        if temp_key_created and os.path.exists(key_file):
-            os.remove(key_file)

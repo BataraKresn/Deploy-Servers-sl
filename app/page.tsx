@@ -5,7 +5,7 @@ import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogDescription, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Globe, Rocket, Server, FileText, HeartPulse, Loader2 } from "lucide-react"
 
 export default function HomePage() {
@@ -17,7 +17,11 @@ export default function HomePage() {
   const [logContent, setLogContent] = useState("")
   const [isLogsLoading, setIsLogsLoading] = useState(false)
   const [isLogContentLoading, setIsLogContentLoading] = useState(false)
-
+  const [showFull, setShowFull] = useState(false);
+  const displayedPing = healthResult?.ping_output
+    ? (showFull ? healthResult.ping_output : healthResult.ping_output.slice(0, 500))
+    : "";
+  
   const handleCheckHealth = async () => {
     setIsHealthLoading(true)
     setHealthResult(null)
@@ -138,7 +142,7 @@ export default function HomePage() {
                   <HeartPulse className="mr-2 h-5 w-5" /> Health
                 </Button>
               </DialogTrigger>
-              <DialogContent className="w-full max-w-[95vw] sm:max-w-lg">
+              <DialogContent className="w-full max-w-[95vw] sm:max-w-lg overflow-x-auto">
                 <DialogHeader>
                   <DialogTitle>System Health Check</DialogTitle>
                   <DialogDescription>
@@ -146,42 +150,47 @@ export default function HomePage() {
                   </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4">
-                  <div className="flex gap-2">
+                  <div className="flex flex-col sm:flex-row gap-2 w-full">
                     <Input
+                      className="w-full max-w-xs"
                       placeholder="Domain (e.g., google.co.id)"
                       value={healthTarget}
                       onChange={(e) => setHealthTarget(e.target.value)}
                     />
-                    <Button onClick={handleCheckHealth} disabled={isHealthLoading}>
+                    <Button className="w-full sm:w-auto" onClick={handleCheckHealth} disabled={isHealthLoading}>
                       {isHealthLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Run"}
                     </Button>
                   </div>
-                  {healthResult && (
+                  {healthResult?.ping_output || healthResult?.dns_output ? (
                     <div className="space-y-3">
-                      <div className="flex items-center gap-2">
-                        <span className="font-semibold">Target:</span>
-                        <span className="font-mono">{healthResult.target || healthTarget || "—"}</span>
-                      </div>
-                      {healthResult.ip && (
-                        <div className="flex items-center gap-2">
-                          <Globe className="h-4 w-4 text-blue-500" />
-                          <span className="font-semibold">Resolved IP:</span>
-                          <span className="font-mono">{healthResult.ip}</span>
+                      {healthResult?.ping_output && (
+                        <div>
+                          <span className="font-semibold">Ping Output:</span>
+                          <pre className="bg-gray-100 dark:bg-gray-900 p-3 rounded-md text-xs mt-1 border max-w-full overflow-x-auto max-h-60 overflow-y-auto whitespace-pre-wrap">
+                            {showFull
+                              ? healthResult.ping_output
+                              : healthResult.ping_output.slice(0, 500) + (healthResult.ping_output.length > 500 ? "..." : "")}
+                          </pre>
+                          {healthResult.ping_output.length > 500 && (
+                            <button
+                              onClick={() => setShowFull(!showFull)}
+                              className="text-blue-500 text-xs mt-1 underline"
+                            >
+                              {showFull ? "Show Less" : "Show More"}
+                            </button>
+                          )}
                         </div>
                       )}
-                      {healthResult.ping && (
+                      {healthResult?.dns_output && (
                         <div>
-                          <span className="font-semibold">Ping Result:</span>
-                          <pre className="bg-gray-100 dark:bg-gray-900 p-3 rounded-md text-xs mt-1 whitespace-pre-wrap border">
-                            {healthResult.ping}
+                          <span className="font-semibold">DNS Output:</span>
+                          <pre className="bg-gray-100 dark:bg-gray-900 p-3 rounded-md text-xs mt-1 whitespace-pre-wrap border max-w-full overflow-x-auto max-h-60 overflow-y-auto">
+                            {healthResult.dns_output}
                           </pre>
                         </div>
                       )}
-                      {healthResult.error && (
-                        <div className="text-red-500 font-semibold">{healthResult.error}</div>
-                      )}
                     </div>
-                  )}
+                  ) : null}
                 </div>
               </DialogContent>
             </Dialog>
