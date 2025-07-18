@@ -168,24 +168,7 @@ export default function DeployPage() {
                 onChange={(e) => setToken(e.target.value)}
               />
             </div>
-            <div className="grid gap-2">
-              <Label htmlFor="privateKey">
-                <div className="flex items-center gap-2">
-                  <KeyRound className="h-4 w-4" />
-                  SSH Private Key (Optional)
-                </div>
-              </Label>
-              <Textarea
-                id="privateKey"
-                placeholder="Paste your SSH private key here if needed..."
-                className="font-mono text-xs h-32"
-                value={privateKey}
-                onChange={(e) => setPrivateKey(e.target.value)}
-              />
-              <p className="text-xs text-muted-foreground">
-                The key will only be used for this session and not stored.
-              </p>
-            </div>
+            {/* SSH Private Key input dihilangkan, hanya Secret Token yang tampil */}
             {deployError && <p className="text-red-500 text-sm mt-2">{deployError}</p>}
           </div>
           <DialogFooter>
