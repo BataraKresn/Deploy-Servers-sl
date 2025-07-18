@@ -157,24 +157,8 @@ export default function DeployPage() {
             <DialogTitle>Deploy to {selectedServer?.name}</DialogTitle>
             <DialogDescription>Enter your credentials to authorize this deployment.</DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid gap-2">
-              <Label htmlFor="token">Secret Token</Label>
-              <Input
-                id="token"
-                type="password"
-                placeholder="Your secret token"
-                value={token}
-                onChange={(e) => setToken(e.target.value)}
-              />
-            </div>
-            {/* SSH Private Key input dihilangkan, hanya Secret Token yang tampil */}
-            {deployError && <p className="text-red-500 text-sm mt-2">{deployError}</p>}
-          </div>
+          {/* SSH Private Key input dihapus, hanya Secret Token yang tampil */}
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsModalOpen(false)}>
-              Cancel
-            </Button>
             <Button onClick={handleDeploySubmit} disabled={isDeploying || !token}>
               {isDeploying && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               {isDeploying ? "Deploying..." : "Authorize & Deploy"}
